@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>農薬希釈計算ツール</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- モバイル用のアイコン設定 -->
+    <link rel="apple-touch-icon" href="icon.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="theme-color" content="#27ae60">
+</head>
+<body>
+    <div class="container">
+        <h1>農薬希釈計算ツール</h1>
+        
+        <div class="tab-container">
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="tab1">希釈倍数から薬量を計算</button>
+                <button class="tab-btn" data-tab="tab2">薬量から散布水量を計算</button>
+                <button class="tab-btn" data-tab="tab3">薬量と水量から倍数を計算</button>
+                <button class="tab-btn" data-tab="tab4">くん煙剤の薬量を計算</button>
+            </div>
+            
+            <!-- タブ1: 希釈倍数と散布水量から使用薬量を計算 -->
+            <div class="tab-content active" id="tab1">
+                <div class="calculator">
+                    <h2>希釈倍数と散布水量から使用薬量を計算</h2>
+                    <p class="calculator-description">散布液量 ÷ 希釈倍数 = 必要な農薬量</p>
+                    <div class="input-group">
+                        <label for="dilution-ratio1">希釈倍数:</label>
+                        <input type="number" inputmode="decimal" id="dilution-ratio1" placeholder="例: 1000">
+                        <span>倍</span>
+                    </div>
+                    <div class="input-group">
+                        <label for="water-amount1">散布水量:</label>
+                        <input type="number" inputmode="decimal" id="water-amount1" placeholder="例: 10">
+                        <select id="water-unit1">
+                            <option value="l">L</option>
+                            <option value="ml">mL</option>
+                        </select>
+                    </div>
+                    <button id="calculate-pesticide-btn">計算する</button>
+                    <div class="result">
+                        <h3>計算結果 - 必要な農薬量</h3>
+                        <div class="result-with-unit-selection">
+                            <span id="pesticide-result">-</span>
+                            <select id="pesticide-result-unit">
+                                <option value="g">g</option>
+                                <option value="kg">kg</option>
+                                <option value="ml">mL</option>
+                                <option value="l">L</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- タブ2: 希釈倍数と使用薬量から散布水量を計算 -->
+            <div class="tab-content" id="tab2">
+                <div class="calculator">
+                    <h2>希釈倍数と使用薬量から散布水量を計算</h2>
+                    <p class="calculator-description">農薬量 × 希釈倍数 = 散布液量</p>
+                    <div class="input-group">
+                        <label for="dilution-ratio2">希釈倍数:</label>
+                        <input type="number" inputmode="decimal" id="dilution-ratio2" placeholder="例: 1000">
+                        <span>倍</span>
+                    </div>
+                    <div class="input-group">
+                        <label for="pesticide-amount2">使用薬量:</label>
+                        <input type="number" inputmode="decimal" id="pesticide-amount2" placeholder="例: 10">
+                        <select id="pesticide-unit2">
+                            <option value="g">g</option>
+                            <option value="kg">kg</option>
+                            <option value="ml">mL</option>
+                            <option value="l">L</option>
+                        </select>
+                    </div>
+                    <button id="calculate-water-btn">計算する</button>
+                    <div class="result">
+                        <h3>計算結果 - 必要な散布水量</h3>
+                        <div class="result-with-unit-selection">
+                            <span id="water-result">-</span>
+                            <select id="water-result-unit">
+                                <option value="l">L</option>
+                                <option value="ml">mL</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- タブ3: 使用薬量と散布水量から希釈倍数を計算 -->
+            <div class="tab-content" id="tab3">
+                <div class="calculator">
+                    <h2>使用薬量と散布水量から希釈倍数を計算</h2>
+                    <p class="calculator-description">散布液量 ÷ 農薬量 = 希釈倍数</p>
+                    <div class="input-group">
+                        <label for="pesticide-amount3">使用薬量:</label>
+                        <input type="number" inputmode="decimal" id="pesticide-amount3" placeholder="例: 10">
+                        <select id="pesticide-unit3">
+                            <option value="g">g</option>
+                            <option value="kg">kg</option>
+                            <option value="ml">mL</option>
+                            <option value="l">L</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="water-amount3">散布水量:</label>
+                        <input type="number" inputmode="decimal" id="water-amount3" placeholder="例: 10">
+                        <select id="water-unit3">
+                            <option value="l">L</option>
+                            <option value="ml">mL</option>
+                        </select>
+                    </div>
+                    <button id="calculate-ratio-btn">計算する</button>
+                    <div class="result">
+                        <h3>計算結果 - 希釈倍数</h3>
+                        <div class="result-with-unit-selection">
+                            <span id="ratio-result">-</span>
+                            <span>倍</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- タブ4: くん煙剤の計算 -->
+            <div class="tab-content" id="tab4">
+                <div class="calculator">
+                    <h2>くん煙剤の使用薬量を計算</h2>
+                    <p class="calculator-description">使用薬量（g）＝ハウス容積（㎥）÷ 基準容積（㎥）× 基準使用量（g）</p>
+                    <div class="note-box">
+                        <p>※この計算は簡易的な方法です。正確な容積計算は、ハウス形状（切妻型・アーチ型など）により異なります。詳細は農薬の使用説明書や専門資料をご参照ください。</p>
+                    </div>
+                    
+                    <!-- ハウス寸法入力 -->
+                    <h3>ハウス寸法</h3>
+                    <div class="input-group">
+                        <label for="greenhouse-width">幅:</label>
+                        <input type="number" inputmode="decimal" id="greenhouse-width" placeholder="例: 10">
+                        <span>m</span>
+                    </div>
+                    <div class="input-group">
+                        <label for="greenhouse-length">長さ:</label>
+                        <input type="number" inputmode="decimal" id="greenhouse-length" placeholder="例: 20">
+                        <span>m</span>
+                    </div>
+                    <div class="input-group">
+                        <label for="greenhouse-height">高さ:</label>
+                        <input type="number" inputmode="decimal" id="greenhouse-height" placeholder="例: 2">
+                        <span>m</span>
+                    </div>
+                    <div class="input-group">
+                        <label for="greenhouse-count">棟数:</label>
+                        <input type="number" inputmode="decimal" id="greenhouse-count" placeholder="例: 1" value="1" min="1">
+                        <span>棟</span>
+                    </div>
+                    
+                    <!-- 計算されたハウス容積 -->
+                    <div class="result-intermediate">
+                        <span>ハウス容積: </span>
+                        <span id="greenhouse-volume">-</span>
+                        <span> ㎥</span>
+                    </div>
+                    
+                    <!-- くん煙剤の基準値 -->
+                    <h3>くん煙剤の基準値</h3>
+                    <div class="input-group">
+                        <label for="fumigant-standard-volume">基準容積:</label>
+                        <input type="number" inputmode="decimal" id="fumigant-standard-volume" placeholder="例: 400" value="400">
+                        <span>㎥</span>
+                    </div>
+                    <div class="input-group">
+                        <label for="fumigant-standard-amount">基準使用量:</label>
+                        <input type="number" inputmode="decimal" id="fumigant-standard-amount" placeholder="例: 50" value="50">
+                        <span>g</span>
+                    </div>
+                    
+                    <button id="calculate-fumigant-btn">計算する</button>
+                    <div class="result">
+                        <h3>計算結果 - 必要なくん煙剤量</h3>
+                        <div class="result-with-unit-selection">
+                            <span id="fumigant-result">-</span>
+                            <span>g</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="instructions">
+            <h2>使用方法</h2>
+            <p>タブを切り替えて、必要な計算を行ってください。</p>
+            <ul>
+                <li><strong>希釈倍数から薬量を計算</strong>: 希釈倍数と水の量から必要な農薬量を計算します</li>
+                <li><strong>薬量から散布水量を計算</strong>: 希釈倍数と農薬の量から必要な水の量を計算します</li>
+                <li><strong>薬量と水量から倍数を計算</strong>: 農薬の量と水の量から希釈倍数を計算します</li>
+                <li><strong>くん煙剤の薬量を計算</strong>: ハウスの容積とくん煙剤の基準値から必要なくん煙剤量を計算します</li>
+            </ul>
+            <p>計算結果の単位は、ドロップダウンから選択して変換できます。</p>
+            <p>例：1000倍希釈で500Lの散布液を作る場合、必要な農薬量は500g（0.5kg）です。</p>
+            <p>くん煙剤計算例：幅10m×長さ20m×高さ2mのハウス（400㎥）で、「400㎥当たり50g使用」の場合、1棟なら50g、3棟連棟なら150gが必要量です。</p>
+            <p>※くん煙剤の正確な計算は、切妻型やアーチ型など、ハウスの形状により容積計算方法が異なります。正確な計算が必要な場合は、専門資料を参照してください。</p>
+        </div>
+        
+        <footer>
+            <p>このツールはオフラインでも使用できます</p>
+        </footer>
+    </div>
+    
+    <script src="script.js"></script>
+    <script>
+        // サービスワーカーの登録（オフライン対応）
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('service-worker.js')
+                .then(function(registration) {
+                    console.log('Service Worker registered with scope:', registration.scope);
+                })
+                .catch(function(error) {
+                    console.log('Service Worker registration failed:', error);
+                });
+        }
+    </script>
+</body>
+</html>
