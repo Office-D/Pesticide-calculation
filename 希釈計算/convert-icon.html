@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>アイコン変換</title>
+  <meta charset="UTF-8">
+</head>
+<body>
+  <canvas id="canvas" width="192" height="192" style="border:1px solid #d3d3d3;"></canvas>
+  <br>
+  <p>このページをブラウザで開き、右クリックして「名前を付けて画像を保存」でPNG形式で保存してください。</p>
+  
+  <script>
+    // SVGデータ
+    const svgData = `<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="192" height="192" viewBox="0 0 192 192">
+  <rect width="192" height="192" fill="#27ae60" rx="24" ry="24"/>
+  <rect x="42" y="46" width="108" height="100" fill="white" rx="8" ry="8"/>
+  <rect x="52" y="66" width="88" height="12" fill="#e8f5e9" rx="2" ry="2"/>
+  <rect x="52" y="90" width="88" height="12" fill="#e8f5e9" rx="2" ry="2"/>
+  <rect x="52" y="114" width="88" height="12" fill="#e8f5e9" rx="2" ry="2"/>
+  <circle cx="142" cy="142" r="36" fill="#e8f5e9"/>
+  <text x="142" y="162" font-family="Arial, sans-serif" font-size="48" font-weight="bold" fill="#27ae60" text-anchor="middle">×</text>
+</svg>`;
+    
+    // Base64エンコード
+    const svgBase64 = 'data:image/svg+xml;base64,' + btoa(svgData);
+    
+    // キャンバスに描画
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    
+    const img = new Image();
+    img.onload = function() {
+      ctx.drawImage(img, 0, 0);
+      
+      // PNGとしてダウンロードリンク（ブラウザの制限でJSからは直接保存できないので手動保存用）
+      canvas.toBlob(function(blob) {
+        console.log('PNG作成完了。右クリックして保存してください。');
+      });
+    };
+    
+    img.src = svgBase64;
+  </script>
+</body>
+</html>
