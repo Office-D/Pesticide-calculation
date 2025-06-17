@@ -6,9 +6,22 @@ const CACHE_URLS = [
   './',
   './index.html',
   './style.css',
-  './script.js',
-  './icon.png',
-  './icon.svg'
+  './icon.svg',
+  // ユーティリティ
+  './js/utils/formatters.js',
+  './js/utils/validators.js',
+  './js/utils/unit-converter.js',
+  // コンポーネント
+  './js/components/tab-manager.js',
+  './js/components/toggle-controls.js',
+  // 計算機
+  './js/calculators/base-calculator.js',
+  './js/calculators/pesticide-calculator.js',
+  './js/calculators/water-calculator.js',
+  './js/calculators/ratio-calculator.js',
+  './js/calculators/ppm-calculator.js',
+  // メイン
+  './js/main.js'
 ];
 
 // サービスワーカーのインストール時の処理

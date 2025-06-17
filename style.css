@@ -64,7 +64,7 @@ h3 {
 }
 
 .tab-btn {
-    background-color: #e0f2f1;
+    background-color: #ffffff;
     border: 1px solid #ddd;
     border-bottom: none;
     padding: 0.7rem 0.8rem;
@@ -77,12 +77,13 @@ h3 {
     font-size: 0.9rem;
     -webkit-appearance: none; /* iOS用ボタンスタイルリセット */
     appearance: none;
-    color: #2c3e50;
-    font-weight: 500;
+    color: #666;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .tab-btn:hover, .tab-btn:active {
-    background-color: #b2dfdb;
+    background-color: #f8f9fa;
+    color: #333;
 }
 
 .tab-btn.active {
@@ -90,6 +91,7 @@ h3 {
     border-bottom: 2px solid #fff;
     color: #27ae60;
     font-weight: bold;
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .tab-content {
@@ -194,39 +196,6 @@ button:hover, button:active {
     margin-top: 0;
 }
 
-.result-intermediate {
-    background-color: #e8f5e9;
-    padding: 0.8rem;
-    border-radius: 4px;
-    margin-bottom: 1.2rem;
-    margin-top: 0.5rem;
-    font-weight: 500;
-}
-
-.result-intermediate span {
-    font-size: 1.1rem;
-}
-
-.result-intermediate span:nth-child(2) {
-    font-weight: bold;
-    color: #27ae60;
-}
-
-.note-box {
-    background-color: #fff3e0;
-    border-left: 4px solid #ff9800;
-    padding: 0.8rem;
-    margin: 0.8rem 0 1.5rem 0;
-    border-radius: 4px;
-    font-size: 0.9rem;
-}
-
-.note-box p {
-    margin: 0;
-    color: #795548;
-    line-height: 1.4;
-}
-
 .instructions {
     background-color: white;
     border-radius: 8px;
@@ -298,13 +267,16 @@ footer {
     .tab-btn {
         margin-bottom: 0.3rem;
         border-radius: 4px;
-        border-bottom: 1px solid #ddd;
+        border: 1px solid #ddd;
         width: 100%;
         text-align: center;
+        background-color: #ffffff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
     }
     
     .tab-btn.active {
-        border-bottom: 1px solid #27ae60;
+        border: 1px solid #27ae60;
+        background-color: #f1f8e9;
     }
     
     .result-with-unit-selection span {
@@ -317,5 +289,158 @@ footer {
     
     select {
         width: 65px;
+    }
+}
+
+/* === ppm濃度計算用追加スタイル === */
+
+/* サブタブ */
+.sub-tabs {
+    display: flex;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.sub-tab-btn {
+    background-color: transparent;
+    border: none;
+    padding: 0.8rem 1rem;
+    cursor: pointer;
+    color: #666;
+    font-weight: 500;
+    transition: all 0.2s;
+    width: 50%;
+    margin-bottom: 0;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.sub-tab-btn:hover {
+    color: #2c3e50;
+}
+
+.sub-tab-btn.active {
+    color: #27ae60;
+    border-bottom: 2px solid #27ae60;
+}
+
+.sub-tab-content {
+    display: none;
+}
+
+.sub-tab-content.active {
+    display: block;
+}
+
+/* トグルスイッチ */
+.unit-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.toggle-label {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.toggle-switch {
+    width: 50px;
+    height: 25px;
+    background-color: #ddd;
+    border-radius: 12px;
+    position: relative;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.toggle-switch.active {
+    background-color: #27ae60;
+}
+
+.toggle-slider {
+    width: 21px;
+    height: 21px;
+    background-color: white;
+    border-radius: 50%;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    transition: transform 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.toggle-switch.active .toggle-slider {
+    transform: translateX(25px);
+}
+
+/* 結果表示の改善 */
+.result-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.8rem;
+}
+
+.result-item:last-child {
+    margin-bottom: 0;
+}
+
+.result-label {
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.result-with-unit-toggle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.result-with-unit-toggle > span:first-child {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #27ae60;
+    min-width: 80px;
+    text-align: right;
+}
+
+/* モバイル対応 */
+@media (max-width: 600px) {
+    .sub-tabs {
+        font-size: 0.9rem;
+    }
+    
+    .unit-toggle {
+        gap: 6px;
+    }
+    
+    .toggle-label {
+        font-size: 0.85rem;
+    }
+    
+    .toggle-switch {
+        width: 45px;
+        height: 22px;
+    }
+    
+    .toggle-slider {
+        width: 18px;
+        height: 18px;
+    }
+    
+    .toggle-switch.active .toggle-slider {
+        transform: translateX(23px);
+    }
+    
+    .result-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.3rem;
+    }
+    
+    .result-with-unit-toggle > span:first-child {
+        min-width: auto;
+        text-align: left;
     }
 }
