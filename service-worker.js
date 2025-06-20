@@ -20,6 +20,8 @@ const CACHE_URLS = [
   './js/calculators/water-calculator.js',
   './js/calculators/ratio-calculator.js',
   './js/calculators/ppm-calculator.js',
+  // シンプルくん煙剤計算
+  './js/fumigant-simple.js',
   // メイン
   './js/main.js'
 ];

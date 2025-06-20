@@ -20,7 +20,8 @@
                 <button class="tab-btn active" data-tab="tab1">希釈倍数から薬量を計算</button>
                 <button class="tab-btn" data-tab="tab2">薬量から散布水量を計算</button>
                 <button class="tab-btn" data-tab="tab3">薬量と水量から倍数を計算</button>
-                <button class="tab-btn" data-tab="tab4">ppm濃度計算</button>
+                <button class="tab-btn" data-tab="tab4">くん煙剤計算</button>
+                <button class="tab-btn" data-tab="tab5">ppm濃度計算</button>
             </div>
             
             <!-- タブ1: 希釈倍数と散布水量から使用薬量を計算 -->
@@ -125,8 +126,79 @@
                 </div>
             </div>
             
-            <!-- タブ4: ppm濃度計算 -->
+            <!-- タブ4: くん煙剤計算 -->
             <div class="tab-content" id="tab4">
+                <div class="calculator">
+                    <h2>くん煙剤使用量計算</h2>
+                    <p class="calculator-description">（間口 × 長さ × 高さ × 棟数）÷ 登録容積 × 登録薬量 = 必要な薬剤量</p>
+                    
+                    <h3>ハウスの寸法を入力</h3>
+                    <div class="input-group">
+                        <label for="fumigant-width">間口（幅）:</label>
+                        <input type="number" inputmode="decimal" id="fumigant-width" placeholder="例: 6">
+                        <span>m</span>
+                    </div>
+                    <div class="input-group">
+                        <label for="fumigant-length">長さ:</label>
+                        <input type="number" inputmode="decimal" id="fumigant-length" placeholder="例: 30">
+                        <span>m</span>
+                    </div>
+                    <div class="input-group">
+                        <label for="fumigant-height">高さ:</label>
+                        <input type="number" inputmode="decimal" id="fumigant-height" placeholder="例: 3">
+                        <span>m</span>
+                    </div>
+                    <div class="input-group">
+                        <label for="fumigant-count">棟数:</label>
+                        <input type="number" inputmode="decimal" id="fumigant-count" placeholder="例: 1" value="1">
+                        <span>棟</span>
+                    </div>
+                    
+                    <div class="volume-result">
+                        <div class="volume-item">
+                            <span class="volume-label">単棟容積:</span>
+                            <span id="fumigant-single-volume">-</span>
+                            <span>m³</span>
+                        </div>
+                        <div class="volume-item">
+                            <span class="volume-label">合計容積:</span>
+                            <span id="fumigant-total-volume">-</span>
+                            <span>m³</span>
+                        </div>
+                    </div>
+                    
+                    <h3>くん煙剤の登録情報を入力</h3>
+                    <div class="input-group">
+                        <label for="fumigant-reg-volume">登録容積:</label>
+                        <input type="number" inputmode="decimal" id="fumigant-reg-volume" placeholder="例: 400">
+                        <span>m³</span>
+                    </div>
+                    <div class="input-group">
+                        <label for="fumigant-reg-amount">登録薬量:</label>
+                        <input type="number" inputmode="decimal" id="fumigant-reg-amount" placeholder="例: 50">
+                        <span>g</span>
+                    </div>
+                    
+                    <button onclick="calculateFumigantSimple()">計算する</button>
+                    
+                    <div class="result">
+                        <h3>計算結果 - 必要なくん煙剤量</h3>
+                        <div class="result-with-unit-toggle">
+                            <span id="fumigant-simple-result">-</span>
+                            <div class="unit-toggle">
+                                <span class="toggle-label">g</span>
+                                <div class="toggle-switch" id="fumigant-simple-toggle" onclick="toggleFumigantSimpleUnit()">
+                                    <div class="toggle-slider"></div>
+                                </div>
+                                <span class="toggle-label">kg</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- タブ5: ppm濃度計算 -->
+            <div class="tab-content" id="tab5">
                 <div class="calculator">
                     <h2>ppm濃度計算</h2>
                     
@@ -256,14 +328,16 @@
                 <li><strong>希釈倍数から薬量を計算</strong>: 希釈倍数と水の量から必要な農薬量を計算します</li>
                 <li><strong>薬量から散布水量を計算</strong>: 希釈倍数と農薬の量から必要な水の量を計算します</li>
                 <li><strong>薬量と水量から倍数を計算</strong>: 農薬の量と水の量から希釈倍数を計算します</li>
+                <li><strong>くん煙剤計算</strong>: ハウスの寸法（間口×長さ×高さ×棟数）から容積を計算し、登録情報（○○m³あたり○○g）に基づいて必要なくん煙剤の量を計算します</li>
                 <li><strong>ppm濃度計算</strong>: ppm濃度と有効成分含有率から必要な製品重量を計算、または逆算で実際の濃度を計算します</li>
             </ul>
-            <p>計算結果の単位は、ドロップダウンから選択して変換できます。</p>
-            <p>例：1000倍希釈で500Lの散布液を作る場合、必要な農薬量は500g（0.5kg）です。</p>
+            <p>計算結果の単位は、ドロップダウンやスライドボタンから選択して変換できます。</p>
+            <p><strong>希釈計算例</strong>：1000倍希釈で500Lの散布液を作る場合、必要な農薬量は500g（0.5kg）です。</p>
+            <p><strong>くん煙剤計算例</strong>：間口6m×長さ30m×高さ3m×棟数1のハウス（540m³）で、400m³あたり50gの登録薬剤の場合、必要量は67.5gです。</p>
         </div>
         
         <footer>
-            <p>このツールはオフラインでも使用できます</p>
+            <p>農薬希釈計算ツール</p>
         </footer>
     </div>
     
@@ -282,6 +356,8 @@
     <script src="js/calculators/water-calculator.js"></script>
     <script src="js/calculators/ratio-calculator.js"></script>
     <script src="js/calculators/ppm-calculator.js"></script>
+    <!-- シンプルくん煙剤計算 -->
+    <script src="js/fumigant-simple.js"></script>
     
     <!-- メイン -->
     <script src="js/main.js"></script>

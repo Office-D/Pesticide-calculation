@@ -21,6 +21,8 @@ function initializeTabManager() {
             // クリックされたタブに対応するコンテンツを表示
             const tabId = this.getAttribute('data-tab');
             document.getElementById(tabId).classList.add('active');
+            
+            // タブ4（くん煙剤計算）は新しいシンプル版で処理されるため、特別処理は不要
         });
     });
 }
