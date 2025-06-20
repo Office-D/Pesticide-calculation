@@ -36,12 +36,47 @@ function initializeSubTabManager() {
     
     subTabButtons.forEach(button => {
         button.addEventListener('click', function() {
-            subTabButtons.forEach(btn => btn.classList.remove('active'));
+            // 同じ親要素内のサブタブのみを対象にする
+            const parentContainer = this.closest('.sub-tabs').parentElement;
+            const siblingSubTabButtons = parentContainer.querySelectorAll('.sub-tab-btn');
+            const siblingSubTabContents = parentContainer.querySelectorAll('.sub-tab-content');
+            
+            siblingSubTabButtons.forEach(btn => btn.classList.remove('active'));
             this.classList.add('active');
             
-            subTabContents.forEach(content => content.classList.remove('active'));
+            siblingSubTabContents.forEach(content => content.classList.remove('active'));
             const subTabId = this.getAttribute('data-subtab');
-            document.getElementById(subTabId).classList.add('active');
+            const targetContent = document.getElementById(subTabId);
+            if (targetContent) {
+                targetContent.classList.add('active');
+            }
+        });
+    });
+}
+
+/**
+ * ネストしたタブ切り替え機能を初期化
+ */
+function initializeNestedTabManager() {
+    const nestedTabButtons = document.querySelectorAll('.nested-tab-btn');
+    const nestedTabContents = document.querySelectorAll('.nested-tab-content');
+    
+    nestedTabButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            // 同じ親要素内のネストタブのみを対象にする
+            const parentContainer = this.closest('.sub-tabs').parentElement;
+            const siblingNestedTabButtons = parentContainer.querySelectorAll('.nested-tab-btn');
+            const siblingNestedTabContents = parentContainer.querySelectorAll('.nested-tab-content');
+            
+            siblingNestedTabButtons.forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+            
+            siblingNestedTabContents.forEach(content => content.classList.remove('active'));
+            const nestedTabId = this.getAttribute('data-nestedtab');
+            const targetContent = document.getElementById(nestedTabId);
+            if (targetContent) {
+                targetContent.classList.add('active');
+            }
         });
     });
 }
@@ -50,10 +85,12 @@ function initializeSubTabManager() {
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = {
         initializeTabManager,
-        initializeSubTabManager
+        initializeSubTabManager,
+        initializeNestedTabManager
     };
 }
 
 // グローバルスコープにも追加
 window.initializeTabManager = initializeTabManager;
 window.initializeSubTabManager = initializeSubTabManager;
+window.initializeNestedTabManager = initializeNestedTabManager;

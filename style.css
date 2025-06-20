@@ -147,6 +147,12 @@ select {
     background-size: 16px;
 }
 
+/* 薬剤プリセット選択用の専用スタイル */
+#chemical-preset {
+    width: 100%;
+    max-width: 300px;
+}
+
 button {
     background-color: #27ae60;
     color: white;
@@ -488,5 +494,119 @@ footer {
     .volume-result .volume-label {
         min-width: auto;
         margin-right: 0;
+    }
+}
+
+/* μmol計算タブ用のスタイル */
+.result-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.result-grid .result-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f8f9fa;
+    padding: 0.8rem;
+    border-radius: 4px;
+    border-left: 4px solid #27ae60;
+}
+
+.calculation-steps {
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-radius: 4px;
+    border-left: 4px solid #2196f3;
+}
+
+.calculation-steps .step {
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    background-color: white;
+    border-radius: 4px;
+}
+
+.calculation-steps .step:last-child {
+    margin-bottom: 0;
+}
+
+.input-group small {
+    display: block;
+    font-size: 0.8rem;
+    color: #666;
+    margin-top: 0.2rem;
+}
+
+/* ネストしたサブタブのスタイル */
+.sub-tab-content .sub-tabs {
+    border-top: 1px solid #e0e0e0;
+    margin-top: 1rem;
+    padding-top: 1rem;
+}
+
+.sub-tab-content .sub-tab-content {
+    padding-top: 1rem;
+}
+
+/* ネストしたタブボタンのスタイル */
+.nested-tab-btn {
+    background-color: transparent;
+    border: none;
+    padding: 0.8rem 1rem;
+    cursor: pointer;
+    color: #666;
+    font-weight: 500;
+    transition: all 0.2s;
+    width: 50%;
+    margin-bottom: 0;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.nested-tab-btn:hover {
+    color: #2c3e50;
+}
+
+.nested-tab-btn.active {
+    color: #27ae60;
+    border-bottom: 2px solid #27ae60;
+}
+
+/* ネストしたタブコンテンツのスタイル */
+.nested-tab-content {
+    display: none;
+    padding-top: 1rem;
+}
+
+.nested-tab-content.active {
+    display: block;
+}
+
+/* 薬剤プリセット選択の専用スタイル（追加設定） */
+#chemical-preset-reverse,
+#chemical-preset-actual {
+    width: 100%;
+    max-width: 300px;
+}
+
+/* μmol計算のモバイル対応 */
+@media (max-width: 600px) {
+    .result-grid {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+    
+    .result-grid .result-item {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.3rem;
+    }
+    
+    .sub-tab-content .sub-tabs {
+        margin-top: 0.5rem;
+        padding-top: 0.5rem;
     }
 }

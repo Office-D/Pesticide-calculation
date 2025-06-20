@@ -22,6 +22,8 @@ const CACHE_URLS = [
   './js/calculators/ppm-calculator.js',
   // シンプルくん煙剤計算
   './js/fumigant-simple.js',
+  // μmol計算
+  './js/micromolar-calculator.js',
   // メイン
   './js/main.js'
 ];

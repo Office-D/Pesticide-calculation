@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // タブ管理の初期化
     initializeTabManager();
     initializeSubTabManager();
+    initializeNestedTabManager();
 
     // すべてのDOM要素が確実に利用可能になるまで少し待つ
     setTimeout(function() {

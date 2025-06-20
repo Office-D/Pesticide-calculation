@@ -22,6 +22,7 @@
                 <button class="tab-btn" data-tab="tab3">薬量と水量から倍数を計算</button>
                 <button class="tab-btn" data-tab="tab4">くん煙剤計算</button>
                 <button class="tab-btn" data-tab="tab5">ppm濃度計算</button>
+                <button class="tab-btn" data-tab="tab6">μmol計算</button>
             </div>
             
             <!-- タブ1: 希釈倍数と散布水量から使用薬量を計算 -->
@@ -319,6 +320,306 @@
                     </div>
                 </div>
             </div>
+            
+            <!-- タブ6: μmol計算 -->
+            <div class="tab-content" id="tab6">
+                <div class="calculator">
+                    <h2>μmol濃度計算</h2>
+                    
+                    <!-- サブタブ -->
+                    <div class="sub-tabs">
+                        <button class="sub-tab-btn active" data-subtab="micromolar-forward">濃度→薬剤量</button>
+                        <button class="sub-tab-btn" data-subtab="micromolar-reverse">薬剤量→最大調製量</button>
+                    </div>
+                    
+                    <!-- サブタブ1: 濃度→薬剤量計算 -->
+                    <div class="sub-tab-content active" id="micromolar-forward">
+                        <p class="calculator-description">μM濃度 × 分子量 ÷ 1000 = ppm濃度　→　必要薬剤量を計算</p>
+                        
+                        <!-- 薬剤プリセット選択 -->
+                        <div class="input-group">
+                            <label for="chemical-preset">薬剤プリセット:</label>
+                            <select id="chemical-preset" onchange="loadPreset()">
+                                <option value="">--- プリセットを選択 ---</option>
+                                <option value="glyphosate">グリホサート (169.07)</option>
+                                <option value="ga3">ジベレリン (GA3) (346.37)</option>
+                                <option value="iaa">インドール酢酸 (IAA) (175.18)</option>
+                                <option value="bap">6-ベンジルアミノプリン (BAP) (225.25)</option>
+                                <option value="aba">アブシジン酸 (ABA) (264.32)</option>
+                                <option value="2,4-d">2,4-D (221.04)</option>
+                                <option value="imidacloprid">イミダクロプリド (255.66)</option>
+                                <option value="thiacloprid">チアクロプリド (252.72)</option>
+                            </select>
+                        </div>
+                        
+                        <!-- 基本情報入力 -->
+                        <h3>基本情報</h3>
+                        <div class="input-group">
+                            <label for="chemical-name">薬剤名:</label>
+                            <input type="text" id="chemical-name" placeholder="例: グリホサート">
+                        </div>
+                        <div class="input-group">
+                            <label for="molecular-weight">分子量:</label>
+                            <input type="number" inputmode="decimal" id="molecular-weight" placeholder="例: 169.07" step="0.01">
+                            <span>g/mol</span>
+                        </div>
+                        <div class="input-group">
+                            <label for="target-micromolar">目標濃度:</label>
+                            <input type="number" inputmode="decimal" id="target-micromolar" placeholder="例: 5.0" step="0.1">
+                            <select id="concentration-unit">
+                                <option value="nM">nM</option>
+                                <option value="μM" selected>μM</option>
+                                <option value="mM">mM</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label for="solution-volume">調製量:</label>
+                            <input type="number" inputmode="decimal" id="solution-volume" placeholder="例: 100">
+                            <select id="volume-unit">
+                                <option value="L">L</option>
+                                <option value="mL">mL</option>
+                                <option value="μL">μL</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label for="active-concentration">原体濃度:</label>
+                            <input type="number" inputmode="decimal" id="active-concentration" placeholder="例: 48.0" step="0.1">
+                            <span>%</span>
+                        </div>
+                        <div class="input-group">
+                            <label for="product-density">製品密度:</label>
+                            <input type="number" inputmode="decimal" id="product-density" placeholder="例: 1.2" step="0.01">
+                            <span>g/mL</span>
+                            <small>(液体製品の場合)</small>
+                        </div>
+                        
+                        <button onclick="calculateMicromolar()">計算する</button>
+                        
+                        <!-- 計算結果 -->
+                        <div class="result">
+                            <h3>計算結果</h3>
+                            <div class="result-grid">
+                                <div class="result-item">
+                                    <span class="result-label">変換後濃度:</span>
+                                    <span id="converted-ppm">-</span>
+                                    <span>ppm</span>
+                                </div>
+                                <div class="result-item">
+                                    <span class="result-label">必要有効成分量:</span>
+                                    <span id="required-active">-</span>
+                                    <span>mg</span>
+                                </div>
+                                <div class="result-item">
+                                    <span class="result-label">必要製品重量:</span>
+                                    <span id="required-product-weight">-</span>
+                                    <span>g</span>
+                                </div>
+                                <div class="result-item">
+                                    <span class="result-label">必要製品体積:</span>
+                                    <span id="required-product-volume">-</span>
+                                    <span>mL</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 計算過程 -->
+                        <div class="result">
+                            <h3>計算過程</h3>
+                            <div id="calculation-steps" class="calculation-steps">
+                                <p>計算を実行すると、段階的な計算過程が表示されます。</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- サブタブ2: 薬剤量→最大調製量逆算 -->
+                    <div class="sub-tab-content" id="micromolar-reverse">
+                        
+                        <!-- 逆算機能選択 -->
+                        <div class="sub-tabs">
+                            <button class="nested-tab-btn active" data-nestedtab="reverse-max-volume">最大調製量計算</button>
+                            <button class="nested-tab-btn" data-nestedtab="reverse-actual-concentration">実濃度確認</button>
+                        </div>
+                        
+                        <!-- 最大調製量計算 -->
+                        <div class="nested-tab-content active" id="reverse-max-volume">
+                            <p class="calculator-description">手持ち薬剤量から最大調製可能量を逆算</p>
+                            
+                            <!-- 薬剤プリセット選択 -->
+                            <div class="input-group">
+                                <label for="chemical-preset-reverse">薬剤プリセット:</label>
+                                <select id="chemical-preset-reverse" onchange="loadPresetReverse()">
+                                    <option value="">--- プリセットを選択 ---</option>
+                                    <option value="glyphosate">グリホサート (169.07)</option>
+                                    <option value="ga3">ジベレリン (GA3) (346.37)</option>
+                                    <option value="iaa">インドール酢酸 (IAA) (175.18)</option>
+                                    <option value="bap">6-ベンジルアミノプリン (BAP) (225.25)</option>
+                                    <option value="aba">アブシジン酸 (ABA) (264.32)</option>
+                                    <option value="2,4-d">2,4-D (221.04)</option>
+                                    <option value="imidacloprid">イミダクロプリド (255.66)</option>
+                                    <option value="thiacloprid">チアクロプリド (252.72)</option>
+                                </select>
+                            </div>
+                            
+                            <!-- 基本情報入力 -->
+                            <h3>基本情報</h3>
+                            <div class="input-group">
+                                <label for="chemical-name-reverse">薬剤名:</label>
+                                <input type="text" id="chemical-name-reverse" placeholder="例: グリホサート">
+                            </div>
+                            <div class="input-group">
+                                <label for="molecular-weight-reverse">分子量:</label>
+                                <input type="number" inputmode="decimal" id="molecular-weight-reverse" placeholder="例: 169.07" step="0.01">
+                                <span>g/mol</span>
+                            </div>
+                            <div class="input-group">
+                                <label for="available-amount">手持ち薬剤量:</label>
+                                <input type="number" inputmode="decimal" id="available-amount" placeholder="例: 0.5" step="0.001">
+                                <span>g</span>
+                            </div>
+                            <div class="input-group">
+                                <label for="active-concentration-reverse">原体濃度:</label>
+                                <input type="number" inputmode="decimal" id="active-concentration-reverse" placeholder="例: 48.0" step="0.1">
+                                <span>%</span>
+                            </div>
+                            <div class="input-group">
+                                <label for="target-concentration-reverse">目標濃度:</label>
+                                <input type="number" inputmode="decimal" id="target-concentration-reverse" placeholder="例: 5.0" step="0.1">
+                                <select id="concentration-unit-reverse">
+                                    <option value="nM">nM</option>
+                                    <option value="μM" selected>μM</option>
+                                    <option value="mM">mM</option>
+                                </select>
+                            </div>
+                            
+                            <button onclick="calculateMicromolarReverse()">計算する</button>
+                            
+                            <!-- 計算結果 -->
+                            <div class="result">
+                                <h3>計算結果</h3>
+                                <div class="result-grid">
+                                    <div class="result-item">
+                                        <span class="result-label">最大調製可能量:</span>
+                                        <span id="max-volume">-</span>
+                                        <span>L</span>
+                                    </div>
+                                    <div class="result-item">
+                                        <span class="result-label">有効成分量:</span>
+                                        <span id="total-active">-</span>
+                                        <span>mg</span>
+                                    </div>
+                                    <div class="result-item">
+                                        <span class="result-label">ppm濃度:</span>
+                                        <span id="ppm-concentration">-</span>
+                                        <span>ppm</span>
+                                    </div>
+                                    <div class="result-item">
+                                        <span class="result-label">使用率:</span>
+                                        <span id="usage-rate">-</span>
+                                        <span>%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 計算過程 -->
+                            <div class="result">
+                                <h3>計算過程</h3>
+                                <div id="calculation-steps-reverse" class="calculation-steps">
+                                    <p>計算を実行すると、段階的な計算過程が表示されます。</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 実濃度確認計算 -->
+                        <div class="nested-tab-content" id="reverse-actual-concentration">
+                            <p class="calculator-description">実際の添加量から実濃度を確認</p>
+                            
+                            <!-- 薬剤プリセット選択 -->
+                            <div class="input-group">
+                                <label for="chemical-preset-actual">薬剤プリセット:</label>
+                                <select id="chemical-preset-actual" onchange="loadPresetActual()">
+                                    <option value="">--- プリセットを選択 ---</option>
+                                    <option value="glyphosate">グリホサート (169.07)</option>
+                                    <option value="ga3">ジベレリン (GA3) (346.37)</option>
+                                    <option value="iaa">インドール酢酸 (IAA) (175.18)</option>
+                                    <option value="bap">6-ベンジルアミノプリン (BAP) (225.25)</option>
+                                    <option value="aba">アブシジン酸 (ABA) (264.32)</option>
+                                    <option value="2,4-d">2,4-D (221.04)</option>
+                                    <option value="imidacloprid">イミダクロプリド (255.66)</option>
+                                    <option value="thiacloprid">チアクロプリド (252.72)</option>
+                                </select>
+                            </div>
+                            
+                            <!-- 基本情報入力 -->
+                            <h3>基本情報</h3>
+                            <div class="input-group">
+                                <label for="chemical-name-actual">薬剤名:</label>
+                                <input type="text" id="chemical-name-actual" placeholder="例: グリホサート">
+                            </div>
+                            <div class="input-group">
+                                <label for="molecular-weight-actual">分子量:</label>
+                                <input type="number" inputmode="decimal" id="molecular-weight-actual" placeholder="例: 169.07" step="0.01">
+                                <span>g/mol</span>
+                            </div>
+                            <div class="input-group">
+                                <label for="actual-amount">実際の添加量:</label>
+                                <input type="number" inputmode="decimal" id="actual-amount" placeholder="例: 0.176" step="0.001">
+                                <span>g</span>
+                            </div>
+                            <div class="input-group">
+                                <label for="actual-volume">調製量:</label>
+                                <input type="number" inputmode="decimal" id="actual-volume" placeholder="例: 100">
+                                <select id="actual-volume-unit">
+                                    <option value="L">L</option>
+                                    <option value="mL">mL</option>
+                                    <option value="μL">μL</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label for="active-concentration-actual">原体濃度:</label>
+                                <input type="number" inputmode="decimal" id="active-concentration-actual" placeholder="例: 48.0" step="0.1">
+                                <span>%</span>
+                            </div>
+                            
+                            <button onclick="calculateActualConcentration()">計算する</button>
+                            
+                            <!-- 計算結果 -->
+                            <div class="result">
+                                <h3>計算結果</h3>
+                                <div class="result-grid">
+                                    <div class="result-item">
+                                        <span class="result-label">実際のppm濃度:</span>
+                                        <span id="actual-ppm">-</span>
+                                        <span>ppm</span>
+                                    </div>
+                                    <div class="result-item">
+                                        <span class="result-label">実際のμM濃度:</span>
+                                        <span id="actual-micromolar">-</span>
+                                        <span>μM</span>
+                                    </div>
+                                    <div class="result-item">
+                                        <span class="result-label">有効成分量:</span>
+                                        <span id="actual-active-amount">-</span>
+                                        <span>mg</span>
+                                    </div>
+                                    <div class="result-item">
+                                        <span class="result-label">製品使用量:</span>
+                                        <span id="product-usage">-</span>
+                                        <span>g</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 計算過程 -->
+                            <div class="result">
+                                <h3>計算過程</h3>
+                                <div id="calculation-steps-actual" class="calculation-steps">
+                                    <p>計算を実行すると、段階的な計算過程が表示されます。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         
         <div class="instructions">
@@ -330,10 +631,12 @@
                 <li><strong>薬量と水量から倍数を計算</strong>: 農薬の量と水の量から希釈倍数を計算します</li>
                 <li><strong>くん煙剤計算</strong>: ハウスの寸法（間口×長さ×高さ×棟数）から容積を計算し、登録情報（○○m³あたり○○g）に基づいて必要なくん煙剤の量を計算します</li>
                 <li><strong>ppm濃度計算</strong>: ppm濃度と有効成分含有率から必要な製品重量を計算、または逆算で実際の濃度を計算します</li>
+                <li><strong>μmol計算</strong>: μM濃度と分子量からppm濃度に変換し、実際の薬剤調製に必要な製品使用量を計算します</li>
             </ul>
             <p>計算結果の単位は、ドロップダウンやスライドボタンから選択して変換できます。</p>
             <p><strong>希釈計算例</strong>：1000倍希釈で500Lの散布液を作る場合、必要な農薬量は500g（0.5kg）です。</p>
             <p><strong>くん煙剤計算例</strong>：間口6m×長さ30m×高さ3m×棟数1のハウス（540m³）で、400m³あたり50gの登録薬剤の場合、必要量は67.5gです。</p>
+            <p><strong>μmol計算例</strong>：グリホサート5μM、100L調製の場合、0.845ppmとなり48%製品を0.176g使用します。</p>
         </div>
         
         <footer>
@@ -358,6 +661,9 @@
     <script src="js/calculators/ppm-calculator.js"></script>
     <!-- シンプルくん煙剤計算 -->
     <script src="js/fumigant-simple.js"></script>
+    
+    <!-- μmol計算 -->
+    <script src="js/micromolar-calculator.js"></script>
     
     <!-- メイン -->
     <script src="js/main.js"></script>
