@@ -43,7 +43,10 @@
                             <option value="ml">mL</option>
                         </select>
                     </div>
-                    <button id="calculate-pesticide-btn">計算する</button>
+                    <div class="button-group">
+                        <button id="calculate-pesticide-btn" class="primary-btn">計算する</button>
+                        <button type="button" class="clear-btn" onclick="clearForm('tab1')">クリア</button>
+                    </div>
                     <div class="result">
                         <h3>計算結果 - 必要な農薬量</h3>
                         <div class="result-with-unit-selection">
@@ -79,7 +82,10 @@
                             <option value="l">L</option>
                         </select>
                     </div>
-                    <button id="calculate-water-btn">計算する</button>
+                    <div class="button-group">
+                        <button id="calculate-water-btn" class="primary-btn">計算する</button>
+                        <button type="button" class="clear-btn" onclick="clearForm('tab2')">クリア</button>
+                    </div>
                     <div class="result">
                         <h3>計算結果 - 必要な散布水量</h3>
                         <div class="result-with-unit-selection">
@@ -116,7 +122,10 @@
                             <option value="ml">mL</option>
                         </select>
                     </div>
-                    <button id="calculate-ratio-btn">計算する</button>
+                    <div class="button-group">
+                        <button id="calculate-ratio-btn" class="primary-btn">計算する</button>
+                        <button type="button" class="clear-btn" onclick="clearForm('tab3')">クリア</button>
+                    </div>
                     <div class="result">
                         <h3>計算結果 - 希釈倍数</h3>
                         <div class="result-with-unit-selection">
@@ -180,7 +189,10 @@
                         <span>g</span>
                     </div>
                     
-                    <button onclick="calculateFumigantSimple()">計算する</button>
+                    <div class="button-group">
+                        <button onclick="calculateFumigantSimple()" class="primary-btn">計算する</button>
+                        <button type="button" class="clear-btn" onclick="clearForm('tab4')">クリア</button>
+                    </div>
                     
                     <div class="result">
                         <h3>計算結果 - 必要なくん煙剤量</h3>
@@ -233,7 +245,10 @@
                             <input type="number" inputmode="decimal" id="active-ingredient-forward" placeholder="例: 3.1">
                             <span>%</span>
                         </div>
-                        <button id="calculate-ppm-forward-btn">計算する</button>
+                        <div class="button-group">
+                            <button id="calculate-ppm-forward-btn" class="primary-btn">計算する</button>
+                            <button type="button" class="clear-btn" onclick="clearForm('ppm-forward')">クリア</button>
+                        </div>
                         <div class="result">
                             <h3>計算結果</h3>
                             <div class="result-item">
@@ -295,7 +310,10 @@
                             <input type="number" inputmode="decimal" id="active-ingredient-reverse" placeholder="例: 3.1">
                             <span>%</span>
                         </div>
-                        <button id="calculate-ppm-reverse-btn">計算する</button>
+                        <div class="button-group">
+                            <button id="calculate-ppm-reverse-btn" class="primary-btn">計算する</button>
+                            <button type="button" class="clear-btn" onclick="clearForm('ppm-reverse')">クリア</button>
+                        </div>
                         <div class="result">
                             <h3>計算結果</h3>
                             <div class="result-item">
@@ -341,14 +359,51 @@
                             <label for="chemical-preset">薬剤プリセット:</label>
                             <select id="chemical-preset" onchange="loadPreset()">
                                 <option value="">--- プリセットを選択 ---</option>
-                                <option value="glyphosate">グリホサート (169.07)</option>
-                                <option value="ga3">ジベレリン (GA3) (346.37)</option>
-                                <option value="iaa">インドール酢酸 (IAA) (175.18)</option>
-                                <option value="bap">6-ベンジルアミノプリン (BAP) (225.25)</option>
-                                <option value="aba">アブシジン酸 (ABA) (264.32)</option>
-                                <option value="2,4-d">2,4-D (221.04)</option>
-                                <option value="imidacloprid">イミダクロプリド (255.66)</option>
-                                <option value="thiacloprid">チアクロプリド (252.72)</option>
+                                <optgroup label="除草剤">
+                                    <option value="glyphosate">グリホサート (169.07)</option>
+                                    <option value="2,4-d">2,4-D (221.04)</option>
+                                </optgroup>
+                                <optgroup label="殺虫剤">
+                                    <option value="imidacloprid">イミダクロプリド (255.66)</option>
+                                    <option value="thiacloprid">チアクロプリド (252.72)</option>
+                                </optgroup>
+                                <optgroup label="オーキシン">
+                                    <option value="iaa">インドール酢酸 (IAA) (175.18)</option>
+                                    <option value="naa">ナフタレン酢酸 (NAA) (186.21)</option>
+                                    <option value="iba">インドール酪酸 (IBA) (203.24)</option>
+                                </optgroup>
+                                <optgroup label="サイトカイニン">
+                                    <option value="bap">6-ベンジルアミノプリン (BAP) (225.25)</option>
+                                    <option value="kinetin">カイネチン (215.21)</option>
+                                    <option value="zeatin">ゼアチン (219.24)</option>
+                                </optgroup>
+                                <optgroup label="ジベレリン">
+                                    <option value="ga3">ジベレリン (GA3) (346.37)</option>
+                                    <option value="ga4">ジベレリン (GA4) (332.39)</option>
+                                </optgroup>
+                                <optgroup label="その他植物ホルモン">
+                                    <option value="aba">アブシジン酸 (ABA) (264.32)</option>
+                                    <option value="paclobutrazol">パクロブトラゾール (293.79)</option>
+                                </optgroup>
+                                <optgroup label="肥料 - 主要元素">
+                                    <option value="urea">尿素 (60.06) [N:46%]</option>
+                                    <option value="ammonium-sulfate">硫安 (132.14) [N:21%]</option>
+                                    <option value="ammonium-nitrate">硝安 (80.04) [N:34%]</option>
+                                    <option value="potassium-nitrate">硝酸カリウム (101.10) [N:13% K:44%]</option>
+                                    <option value="potassium-sulfate">硫酸カリウム (174.26) [K:50%]</option>
+                                    <option value="monopotassium-phosphate">リン酸一カリウム (136.09) [P:52% K:34%]</option>
+                                    <option value="calcium-nitrate">硝酸カルシウム (164.09) [N:15.5% Ca:19%]</option>
+                                    <option value="magnesium-sulfate">硫酸マグネシウム (246.47) [Mg:9.8%]</option>
+                                </optgroup>
+                                <optgroup label="肥料 - 微量元素">
+                                    <option value="iron-sulfate">硫酸第一鉄 (278.01) [Fe:20%]</option>
+                                    <option value="iron-edta">EDTA鉄 (367.07) [Fe:13%]</option>
+                                    <option value="zinc-sulfate">硫酸亜鉛 (287.56) [Zn:22.7%]</option>
+                                    <option value="manganese-sulfate">硫酸マンガン (169.02) [Mn:32.5%]</option>
+                                    <option value="copper-sulfate">硫酸銅 (249.69) [Cu:25.5%]</option>
+                                    <option value="boric-acid">ホウ酸 (61.83) [B:17.5%]</option>
+                                    <option value="sodium-molybdate">モリブデン酸ナトリウム (241.95) [Mo:39.7%]</option>
+                                </optgroup>
                             </select>
                         </div>
                         
@@ -370,6 +425,8 @@
                                 <option value="nM">nM</option>
                                 <option value="μM" selected>μM</option>
                                 <option value="mM">mM</option>
+                                <option value="M">M</option>
+                                <option value="mol/L">mol/L</option>
                             </select>
                         </div>
                         <div class="input-group">
@@ -385,12 +442,26 @@
                             <label for="active-concentration">原体濃度:</label>
                             <input type="number" inputmode="decimal" id="active-concentration" placeholder="例: 48.0" step="0.1">
                             <span>%</span>
+                            <small id="concentration-hint" class="input-hint"></small>
+                        </div>
+                        <div class="input-group" id="product-info-group" style="display: none;">
+                            <label for="product-formulation">製品剤型:</label>
+                            <select id="product-formulation" onchange="updateFormulationInfo()">
+                                <option value="">--- 剤型を選択 ---</option>
+                            </select>
+                            <small id="formulation-hint" class="input-hint"></small>
                         </div>
                         <div class="input-group">
                             <label for="product-density">製品密度:</label>
                             <input type="number" inputmode="decimal" id="product-density" placeholder="例: 1.2" step="0.01">
                             <span>g/mL</span>
-                            <small>(液体製品の場合)</small>
+                            <small id="density-hint">(液体製品の場合)</small>
+                        </div>
+                        <div class="input-group" id="recommended-range" style="display: none;">
+                            <div class="recommendation-box">
+                                <h4>推奨濃度範囲</h4>
+                                <span id="recommended-text"></span>
+                            </div>
                         </div>
                         
                         <button onclick="calculateMicromolar()">計算する</button>
@@ -419,6 +490,17 @@
                                     <span id="required-product-volume">-</span>
                                     <span>mL</span>
                                 </div>
+                                <div class="result-item">
+                                    <span class="result-label">mol数:</span>
+                                    <span id="required-moles">-</span>
+                                    <span>μmol</span>
+                                </div>
+                            </div>
+                            
+                            <!-- 製品情報表示 -->
+                            <div id="product-details" class="product-details" style="display: none;">
+                                <h4>選択した製品情報</h4>
+                                <div id="product-info-display"></div>
                             </div>
                         </div>
                         
@@ -488,6 +570,8 @@
                                     <option value="nM">nM</option>
                                     <option value="μM" selected>μM</option>
                                     <option value="mM">mM</option>
+                                    <option value="M">M</option>
+                                    <option value="mol/L">mol/L</option>
                                 </select>
                             </div>
                             
@@ -633,6 +717,16 @@
                 <li><strong>ppm濃度計算</strong>: ppm濃度と有効成分含有率から必要な製品重量を計算、または逆算で実際の濃度を計算します</li>
                 <li><strong>μmol計算</strong>: μM濃度と分子量からppm濃度に変換し、実際の薬剤調製に必要な製品使用量を計算します</li>
             </ul>
+            
+            <h3>新機能</h3>
+            <ul>
+                <li><strong>前回入力値の記憶</strong>: 入力した値は自動的に保存され、次回開いた時に復元されます</li>
+                <li><strong>ワンタップクリア</strong>: 「クリア」ボタンで入力内容を一括クリアできます</li>
+                <li><strong>キーボードショートカット</strong>: Ctrl+Enterで計算、Ctrl+Deleteでクリア</li>
+                <li><strong>タッチ最適化</strong>: スマートフォンでの操作を向上させるタッチフレンドリーデザイン</li>
+                <li><strong>ダークモード対応</strong>: システムのダークモード設定に自動対応</li>
+            </ul>
+            
             <p>計算結果の単位は、ドロップダウンやスライドボタンから選択して変換できます。</p>
             <p><strong>希釈計算例</strong>：1000倍希釈で500Lの散布液を作る場合、必要な農薬量は500g（0.5kg）です。</p>
             <p><strong>くん煙剤計算例</strong>：間口6m×長さ30m×高さ3m×棟数1のハウス（540m³）で、400m³あたり50gの登録薬剤の場合、必要量は67.5gです。</p>
@@ -648,6 +742,8 @@
     <script src="js/utils/formatters.js"></script>
     <script src="js/utils/validators.js"></script>
     <script src="js/utils/unit-converter.js"></script>
+    <script src="js/utils/storage-helper.js"></script>
+    <script src="js/utils/form-helper.js"></script>
     
     <!-- コンポーネント -->
     <script src="js/components/tab-manager.js"></script>

@@ -22,32 +22,119 @@ body {
 h1 {
     text-align: center;
     color: #2c3e50;
-    margin-bottom: 1.5rem;
-    font-size: 1.8rem;
+    margin-bottom: 2rem;
+    font-size: 2.2rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    background: linear-gradient(135deg, #2c3e50, #27ae60);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 h2 {
     color: #2c3e50;
-    margin-bottom: 0.5rem;
-    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    font-size: 1.6rem;
+    font-weight: 600;
+    letter-spacing: -0.3px;
 }
 
 h3 {
     color: #2c3e50;
-    margin-bottom: 0.5rem;
-    font-size: 1.2rem;
+    margin-bottom: 0.8rem;
+    font-size: 1.3rem;
+    font-weight: 600;
 }
 
 /* 計算式の説明スタイル */
 .calculator-description {
-    background-color: #e8f5e9;
-    padding: 0.6rem;
-    border-radius: 4px;
-    margin-bottom: 1rem;
-    font-weight: bold;
+    background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+    font-size: 1.1rem;
     text-align: center;
     color: #2e7d32;
-    border-left: 4px solid #2e7d32;
+    border: 2px solid #27ae60;
+    box-shadow: 0 2px 8px rgba(39, 174, 96, 0.1);
+}
+
+/* 入力ヒントスタイル */
+.input-hint {
+    display: block;
+    color: #666;
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
+    font-style: italic;
+}
+
+/* 推奨範囲表示 */
+.recommendation-box {
+    background-color: #fff3e0;
+    border: 1px solid #ffcc02;
+    border-radius: 4px;
+    padding: 0.75rem;
+    margin-top: 0.5rem;
+}
+
+.recommendation-box h4 {
+    color: #e65100;
+    font-size: 0.9rem;
+    margin-bottom: 0.25rem;
+}
+
+.recommendation-box span {
+    color: #ef6c00;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+/* 製品詳細表示 */
+.product-details {
+    background-color: #f3e5f5;
+    border: 1px solid #ce93d8;
+    border-radius: 4px;
+    padding: 1rem;
+    margin-top: 1rem;
+}
+
+.product-details h4 {
+    color: #6a1b9a;
+    margin-bottom: 0.5rem;
+}
+
+.product-info-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.25rem 0;
+    border-bottom: 1px solid #e1bee7;
+}
+
+.product-info-item:last-child {
+    border-bottom: none;
+}
+
+.product-info-label {
+    font-weight: 500;
+    color: #4a148c;
+}
+
+.product-info-value {
+    color: #7b1fa2;
+}
+
+/* optgroup スタイル */
+optgroup {
+    font-weight: bold;
+    font-style: normal;
+    color: #2c3e50;
+}
+
+optgroup option {
+    font-weight: normal;
+    padding-left: 1rem;
     font-size: 0.95rem;
 }
 
@@ -67,18 +154,23 @@ h3 {
     background-color: #ffffff;
     border: 1px solid #ddd;
     border-bottom: none;
-    padding: 0.7rem 0.8rem;
+    padding: 1rem 1.2rem;
     cursor: pointer;
     margin-right: 0.3rem;
-    border-radius: 4px 4px 0 0;
-    transition: all 0.2s;
+    border-radius: 8px 8px 0 0;
+    transition: all 0.3s ease;
     white-space: nowrap;
     margin-bottom: 0.5rem;
-    font-size: 0.9rem;
-    -webkit-appearance: none; /* iOS用ボタンスタイルリセット */
+    font-size: 1rem;
+    min-height: 48px;
+    -webkit-appearance: none;
     appearance: none;
     color: #666;
-    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .tab-btn:hover, .tab-btn:active {
@@ -103,35 +195,50 @@ h3 {
 }
 
 .calculator {
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    padding: 1.5rem;
-    margin-bottom: 1.5rem;
+    background: linear-gradient(135deg, #ffffff, #f8f9fa);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
 }
 
 .input-group {
-    margin-bottom: 1.2rem;
+    margin-bottom: 1.5rem;
     display: flex;
     align-items: center;
     flex-wrap: wrap;
+    gap: 12px;
 }
 
 label {
     display: block;
-    margin-bottom: 0.4rem;
-    font-weight: bold;
+    margin-bottom: 0.6rem;
+    font-weight: 600;
+    font-size: 1rem;
+    color: #2c3e50;
     width: 100%;
 }
 
 input, select {
-    padding: 0.8rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 1rem;
+    padding: 1rem;
+    border: 2px solid #e1e5e9;
+    border-radius: 8px;
+    font-size: 1.1rem;
     margin-right: 0.5rem;
-    -webkit-appearance: none; /* iOS用入力スタイルリセット */
+    min-height: 48px;
+    -webkit-appearance: none;
     appearance: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: #27ae60;
+    box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.2);
+    transform: translateY(-1px);
 }
 
 input {
@@ -157,30 +264,68 @@ button {
     background-color: #27ae60;
     color: white;
     border: none;
-    padding: 0.9rem 1.5rem;
-    font-size: 1rem;
-    border-radius: 4px;
+    padding: 1.2rem 1.8rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 8px;
     cursor: pointer;
     width: 100%;
+    min-height: 56px;
     margin-bottom: 1.5rem;
-    transition: background-color 0.2s;
-    -webkit-appearance: none; /* iOS用ボタンスタイルリセット */
+    transition: all 0.3s ease;
+    -webkit-appearance: none;
     appearance: none;
+    box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
 }
 
-button:hover, button:active {
+button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+button:active::before {
+    width: 300px;
+    height: 300px;
+}
+
+button:hover {
     background-color: #219653;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(39, 174, 96, 0.4);
+}
+
+button:active {
+    background-color: #1e8449;
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(39, 174, 96, 0.3);
 }
 
 .result {
-    background-color: #f1f8e9;
-    padding: 1.2rem;
-    border-radius: 4px;
-    border-left: 4px solid #27ae60;
+    background: linear-gradient(135deg, #f1f8e9, #e8f5e9);
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 2px solid #27ae60;
+    box-shadow: 0 4px 12px rgba(39, 174, 96, 0.1);
+    margin-top: 1.5rem;
 }
 
 .result p {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #2c3e50;
 }
 
 .result-with-unit-selection {
@@ -226,75 +371,313 @@ button:hover, button:active {
 
 footer {
     text-align: center;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     color: #666;
-    padding: 1rem 0;
+    padding: 2rem 0;
+    font-weight: 500;
+}
+
+@media (prefers-color-scheme: dark) {
+    footer {
+        color: #999;
+    }
+}
+
+/* ボタングループ */
+.button-group {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 1.5rem;
+}
+
+.primary-btn {
+    flex: 1;
+}
+
+.clear-btn {
+    background-color: #f8f9fa;
+    color: #6c757d;
+    border: 2px solid #e9ecef;
+    padding: 1.2rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: 8px;
+    cursor: pointer;
+    min-height: 56px;
+    transition: all 0.3s ease;
+    flex: 0 0 auto;
+    width: 100px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.clear-btn:hover {
+    background-color: #e9ecef;
+    color: #495057;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.clear-btn:active {
+    transform: translateY(0);
+    background-color: #dee2e6;
+}
+
+/* クリアアニメーション */
+.clearing {
+    animation: clearPulse 0.3s ease-in-out;
+}
+
+@keyframes clearPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(0.95); opacity: 0.7; }
+    100% { transform: scale(1); }
+}
+
+/* フォーム状態表示 */
+.form-status {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(39, 174, 96, 0.9);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    z-index: 1000;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+.form-status.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.form-status.clear {
+    background: rgba(220, 53, 69, 0.9);
 }
 
 /* タッチ端末用のスタイル調整 */
 @media (hover: none) {
     input, select, button {
-        font-size: 16px; /* iOS用フォントサイズ調整（ズーム防止） */
+        font-size: 16px;
     }
     
     .tab-btn:active {
-        background-color: #e9ecef;
+        transform: scale(0.98);
+        background: linear-gradient(135deg, #e9ecef, #f8f9fa);
     }
     
     button:active {
-        background-color: #219653;
+        transform: translateY(1px) scale(0.99);
+    }
+    
+    input:focus, select:focus {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(39, 174, 96, 0.2);
     }
 }
 
 /* モバイル用レスポンシブ調整 */
 @media (max-width: 600px) {
     .container {
-        padding: 0.8rem;
+        padding: 1rem;
+        margin: 0;
+        max-width: 100%;
     }
     
     h1 {
-        font-size: 1.5rem;
-        margin-bottom: 1rem;
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
     }
     
     h2 {
-        font-size: 1.2rem;
+        font-size: 1.4rem;
     }
     
     .calculator, .instructions {
-        padding: 1.2rem;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
     }
     
     .tabs {
-        flex-direction: column;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
         border-bottom: none;
+        margin-bottom: 1.5rem;
     }
     
     .tab-btn {
-        margin-bottom: 0.3rem;
-        border-radius: 4px;
-        border: 1px solid #ddd;
+        margin: 0;
+        border-radius: 8px;
+        border: 2px solid #e1e5e9;
         width: 100%;
         text-align: center;
-        background-color: #ffffff;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        background: linear-gradient(135deg, #ffffff, #f8f9fa);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        font-size: 0.9rem;
+        padding: 0.8rem 0.6rem;
+        min-height: 56px;
     }
     
     .tab-btn.active {
-        border: 1px solid #27ae60;
-        background-color: #f1f8e9;
+        border: 2px solid #27ae60;
+        background: linear-gradient(135deg, #f1f8e9, #e8f5e9);
+        color: #27ae60;
+        font-weight: 600;
     }
     
     .result-with-unit-selection span {
-        font-size: 1.2rem;
+        font-size: 1.3rem;
     }
     
     input {
-        width: calc(100% - 70px);
+        width: calc(100% - 80px);
+        font-size: 1.1rem;
     }
     
     select {
-        width: 65px;
+        width: 75px;
+        font-size: 1rem;
+    }
+    
+    button {
+        font-size: 1.2rem;
+        padding: 1.4rem 2rem;
+        min-height: 60px;
+    }
+    
+    .input-group {
+        margin-bottom: 1.8rem;
+    }
+    
+    .button-group {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .clear-btn {
+        width: 100%;
+        min-height: 48px;
+        font-size: 1rem;
+    }
+    
+    .form-status {
+        top: 10px;
+        right: 10px;
+        left: 10px;
+        text-align: center;
+    }
+}
+
+/* ダークモード対応 */
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #1a1a1a;
+        color: #e1e1e1;
+    }
+    
+    .container {
+        background-color: #1a1a1a;
+    }
+    
+    h1 {
+        background: linear-gradient(135deg, #e1e1e1, #27ae60);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    
+    h2, h3 {
+        color: #e1e1e1;
+    }
+    
+    .calculator {
+        background: linear-gradient(135deg, #2d2d30, #3c3c3f);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+    
+    .calculator-description {
+        background: linear-gradient(135deg, #1a4a2a, #2d5a3d);
+        color: #7ed56f;
+        border: 2px solid #4caf50;
+    }
+    
+    .result {
+        background: linear-gradient(135deg, #1a4a2a, #2d5a3d);
+        border: 2px solid #4caf50;
+        color: #e1e1e1;
+    }
+    
+    input, select {
+        background-color: #3c3c3f;
+        border: 2px solid #555558;
+        color: #e1e1e1;
+    }
+    
+    input:focus, select:focus {
+        border-color: #4caf50;
+        background-color: #404043;
+        box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+    }
+    
+    .tab-btn {
+        background: linear-gradient(135deg, #3c3c3f, #484848);
+        border: 2px solid #555558;
+        color: #e1e1e1;
+    }
+    
+    .tab-btn.active {
+        background: linear-gradient(135deg, #1a4a2a, #2d5a3d);
+        border: 2px solid #4caf50;
+        color: #7ed56f;
+    }
+    
+    .instructions {
+        background: linear-gradient(135deg, #2d2d30, #3c3c3f);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: #e1e1e1;
+    }
+    
+    .toggle-switch {
+        background-color: #555558;
+    }
+    
+    .toggle-switch.active {
+        background-color: #4caf50;
+    }
+    
+    .clear-btn {
+        background-color: #495057;
+        color: #adb5bd;
+        border: 2px solid #6c757d;
+    }
+    
+    .clear-btn:hover {
+        background-color: #6c757d;
+        color: #e9ecef;
+    }
+    
+    .clear-btn:active {
+        background-color: #5a6268;
+    }
+    
+    /* モバイルダークモード対応 */
+    @media (max-width: 600px) {
+        .tab-btn {
+            background: linear-gradient(135deg, #3c3c3f, #484848);
+        }
+        
+        .tab-btn.active {
+            background: linear-gradient(135deg, #1a4a2a, #2d5a3d);
+        }
     }
 }
 
