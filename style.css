@@ -698,7 +698,7 @@ footer {
     color: #666;
     font-weight: 500;
     transition: all 0.2s;
-    width: 50%;
+    flex: 1;
     margin-bottom: 0;
     -webkit-appearance: none;
     appearance: none;

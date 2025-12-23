@@ -7,15 +7,20 @@ class PpmCalculator extends BaseCalculator {
         super();
         this.forwardBtn = null;
         this.reverseBtn = null;
+        this.volumeBtn = null;
     }
 
     initialize() {
         this.forwardBtn = document.getElementById('calculate-ppm-forward-btn');
         this.reverseBtn = document.getElementById('calculate-ppm-reverse-btn');
+        this.volumeBtn = document.getElementById('calculate-ppm-volume-btn');
 
         // イベントリスナーの設定
         this.forwardBtn.addEventListener('click', () => this.calculateForward());
         this.reverseBtn.addEventListener('click', () => this.calculateReverse());
+        if (this.volumeBtn) {
+            this.volumeBtn.addEventListener('click', () => this.calculateVolume());
+        }
 
         this.initialized = true;
     }
@@ -100,6 +105,48 @@ class PpmCalculator extends BaseCalculator {
         this.displayResult('concentration-result', formatNumber(concentration));
         displayActiveWeight(activeWeightMg, 'reverse', 'active-weight-reverse-result');
     }
+
+    /**
+     * 製品重量→調製可能液量計算
+     */
+    calculateVolume() {
+        const productWeight = this.getInputValue('product-weight-volume');
+        const activeIngredient = this.getInputValue('active-ingredient-volume');
+        const targetPpm = this.getInputValue('target-ppm-volume');
+
+        // 入力値の検証
+        const weightValidation = validateNumber(productWeight, '製品重量');
+        if (!weightValidation.valid) {
+            this.showError(weightValidation.message);
+            return;
+        }
+
+        const activeValidation = validatePercentage(activeIngredient, '有効成分含有率');
+        if (!activeValidation.valid) {
+            this.showError(activeValidation.message);
+            return;
+        }
+
+        const concentrationValidation = validateConcentration(targetPpm);
+        if (!concentrationValidation.valid) {
+            this.showError(concentrationValidation.message);
+            return;
+        }
+
+        // 単位変換
+        const state = getPpmState('volume');
+        const productWeightGrams = convertToGrams(productWeight, state.useKilogram);
+
+        // 計算
+        // 有効成分量(mg) = 製品重量(g) × 含有率(%) × 10
+        const activeWeightMg = productWeightGrams * activeIngredient * 10;
+        // 調製可能量(L) = 有効成分量(mg) ÷ 目標濃度(ppm)
+        const volumeLiters = activeWeightMg / targetPpm;
+
+        // 結果表示
+        displayVolumeResult(volumeLiters, 'volume');
+        displayActiveWeight(activeWeightMg, 'volume', 'active-weight-volume-result');
+    }
 }
 
 // グローバル関数として公開（従来の互換性のため）
@@ -112,6 +159,12 @@ window.calculatePpmForward = function() {
 window.calculatePpmReverse = function() {
     if (window.ppmCalculator && window.ppmCalculator.initialized) {
         window.ppmCalculator.calculateReverse();
+    }
+};
+
+window.calculatePpmVolume = function() {
+    if (window.ppmCalculator && window.ppmCalculator.initialized) {
+        window.ppmCalculator.calculateVolume();
     }
 };
 

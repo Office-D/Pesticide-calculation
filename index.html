@@ -219,6 +219,7 @@
                     <div class="sub-tabs">
                         <button class="sub-tab-btn active" data-subtab="ppm-forward">濃度→製品重量</button>
                         <button class="sub-tab-btn" data-subtab="ppm-reverse">製品重量→濃度</button>
+                        <button class="sub-tab-btn" data-subtab="ppm-volume">製品重量→液量</button>
                     </div>
                     
                     <!-- サブタブ1: 濃度→製品重量計算 -->
@@ -336,9 +337,68 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- サブタブ3: 製品重量→調製可能液量計算 -->
+                    <div class="sub-tab-content" id="ppm-volume">
+                        <p class="calculator-description">調製可能量(L) = 製品重量(g) × 含有率(%) × 10 ÷ 目標濃度(ppm)</p>
+                        <div class="input-group">
+                            <label for="product-weight-volume">製品重量:</label>
+                            <input type="number" inputmode="decimal" id="product-weight-volume" placeholder="例: 10">
+                            <div class="unit-toggle">
+                                <span class="toggle-label">g</span>
+                                <div class="toggle-switch" id="weight-toggle-volume" onclick="toggleWeightUnit('volume')">
+                                    <div class="toggle-slider"></div>
+                                </div>
+                                <span class="toggle-label">kg</span>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label for="active-ingredient-volume">有効成分含有率:</label>
+                            <input type="number" inputmode="decimal" id="active-ingredient-volume" placeholder="例: 3.1">
+                            <span>%</span>
+                        </div>
+                        <div class="input-group">
+                            <label for="target-ppm-volume">目標濃度:</label>
+                            <input type="number" inputmode="decimal" id="target-ppm-volume" placeholder="例: 200">
+                            <span>ppm</span>
+                        </div>
+                        <div class="button-group">
+                            <button id="calculate-ppm-volume-btn" class="primary-btn">計算する</button>
+                            <button type="button" class="clear-btn" onclick="clearForm('ppm-volume')">クリア</button>
+                        </div>
+                        <div class="result">
+                            <h3>計算結果</h3>
+                            <div class="result-item">
+                                <span class="result-label">調製可能な液量:</span>
+                                <div class="result-with-unit-toggle">
+                                    <span id="volume-result-ppm">-</span>
+                                    <div class="unit-toggle">
+                                        <span class="toggle-label">L</span>
+                                        <div class="toggle-switch" id="volume-toggle-volume" onclick="toggleVolumeUnit('volume')">
+                                            <div class="toggle-slider"></div>
+                                        </div>
+                                        <span class="toggle-label">mL</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">有効成分量:</span>
+                                <div class="result-with-unit-toggle">
+                                    <span id="active-weight-volume-result">-</span>
+                                    <div class="unit-toggle">
+                                        <span class="toggle-label">mg</span>
+                                        <div class="toggle-switch" id="active-toggle-volume" onclick="toggleActiveUnit('volume')">
+                                            <div class="toggle-slider"></div>
+                                        </div>
+                                        <span class="toggle-label">g</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            
+
             <!-- タブ6: μmol計算 -->
             <div class="tab-content" id="tab6">
                 <div class="calculator">
