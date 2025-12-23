@@ -1,16 +1,23 @@
 // サービスワーカーのキャッシュ名とバージョン
-const CACHE_NAME = 'pesticide-dilution-calculator-v1';
+const CACHE_NAME = 'pesticide-dilution-calculator-v2';
 
 // キャッシュするファイルのリスト
 const CACHE_URLS = [
   './',
   './index.html',
   './style.css',
-  './icon.svg',
+  './manifest.json',
+  // アイコン
+  './icons/icon.svg',
+  './icons/apple-touch-icon.png',
+  './icons/icon-192.png',
+  './icons/icon-512.png',
   // ユーティリティ
   './js/utils/formatters.js',
   './js/utils/validators.js',
   './js/utils/unit-converter.js',
+  './js/utils/storage-helper.js',
+  './js/utils/form-helper.js',
   // コンポーネント
   './js/components/tab-manager.js',
   './js/components/toggle-controls.js',
