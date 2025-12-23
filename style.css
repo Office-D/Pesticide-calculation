@@ -377,12 +377,6 @@ footer {
     font-weight: 500;
 }
 
-@media (prefers-color-scheme: dark) {
-    footer {
-        color: #999;
-    }
-}
-
 /* ボタングループ */
 .button-group {
     display: flex;
@@ -573,111 +567,6 @@ footer {
         right: 10px;
         left: 10px;
         text-align: center;
-    }
-}
-
-/* ダークモード対応 */
-@media (prefers-color-scheme: dark) {
-    body {
-        background-color: #1a1a1a;
-        color: #e1e1e1;
-    }
-    
-    .container {
-        background-color: #1a1a1a;
-    }
-    
-    h1 {
-        background: linear-gradient(135deg, #e1e1e1, #27ae60);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-    }
-    
-    h2, h3 {
-        color: #e1e1e1;
-    }
-    
-    .calculator {
-        background: linear-gradient(135deg, #2d2d30, #3c3c3f);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-    }
-    
-    .calculator-description {
-        background: linear-gradient(135deg, #1a4a2a, #2d5a3d);
-        color: #7ed56f;
-        border: 2px solid #4caf50;
-    }
-    
-    .result {
-        background: linear-gradient(135deg, #1a4a2a, #2d5a3d);
-        border: 2px solid #4caf50;
-        color: #e1e1e1;
-    }
-    
-    input, select {
-        background-color: #3c3c3f;
-        border: 2px solid #555558;
-        color: #e1e1e1;
-    }
-    
-    input:focus, select:focus {
-        border-color: #4caf50;
-        background-color: #404043;
-        box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
-    }
-    
-    .tab-btn {
-        background: linear-gradient(135deg, #3c3c3f, #484848);
-        border: 2px solid #555558;
-        color: #e1e1e1;
-    }
-    
-    .tab-btn.active {
-        background: linear-gradient(135deg, #1a4a2a, #2d5a3d);
-        border: 2px solid #4caf50;
-        color: #7ed56f;
-    }
-    
-    .instructions {
-        background: linear-gradient(135deg, #2d2d30, #3c3c3f);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        color: #e1e1e1;
-    }
-    
-    .toggle-switch {
-        background-color: #555558;
-    }
-    
-    .toggle-switch.active {
-        background-color: #4caf50;
-    }
-    
-    .clear-btn {
-        background-color: #495057;
-        color: #adb5bd;
-        border: 2px solid #6c757d;
-    }
-    
-    .clear-btn:hover {
-        background-color: #6c757d;
-        color: #e9ecef;
-    }
-    
-    .clear-btn:active {
-        background-color: #5a6268;
-    }
-    
-    /* モバイルダークモード対応 */
-    @media (max-width: 600px) {
-        .tab-btn {
-            background: linear-gradient(135deg, #3c3c3f, #484848);
-        }
-        
-        .tab-btn.active {
-            background: linear-gradient(135deg, #1a4a2a, #2d5a3d);
-        }
     }
 }
 
